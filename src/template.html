@@ -1,0 +1,61 @@
+<div class="ng-datatables">
+  <div class="row">
+    <div class="col-md-12">
+      <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+          <th ng-repeat="column in $ctrl.option.columns">{{column.title?column.title:column.data}}</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr ng-if="!$ctrl.state.data || $ctrl.state.data.length<=0">
+          <td colspan="{{$ctrl.option.columns.length}}">无数据</td>
+        </tr>
+        <tr ng-if="$ctrl.isLoading">
+          <td colspan="{{$ctrl.option.columns.length}}">加载中...</td>
+        </tr>
+        <tr ng-if="!$ctrl.isLoading" ng-repeat="data in $ctrl.state.data">
+          <td ng-repeat="column in $ctrl.option.columns">
+            <span ng-if="!column.template">{{$ctrl.getData(data,column.data) | ngTableFilter : column.filters}}</span>
+            <table-template ng-if="column.template" data="$ctrl.getData(data,column.data)" full="data"
+                            template="{{column.template}}">{{column.template}}
+            </table-template>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row paging" ng-if="$ctrl.option.paging">
+    <div class="col-md-7">
+      <div class="dataTables_length">
+        <div class="page-total">
+          <span>每页显示</span>
+          <select size="1" class="form-control input-xsmall input-inline" ng-model="$ctrl.state.size"
+                  ng-change="$ctrl.goPage($ctrl.state.page)"
+                  ng-options="val for val in [10,20,50,100]">
+          </select>
+          <span>条记录</span>
+        </div>
+        <div class="dataTables_info"><span>当前显示 {{$ctrl.state.start}} 到 {{$ctrl.state.end}} 条，共{{$ctrl.state.totalItems}}条记录</span></div>
+      </div>
+    </div>
+    <div class="col-md-5">
+      <div uib-pagination
+           ng-change="$ctrl.goPage($ctrl.state.page)"
+           first-text="首页"
+           previous-text="上一页"
+           next-text="下一页" ,
+           last-text="尾页" ,
+           total-items="$ctrl.state.totalItems"
+           ng-model="$ctrl.state.page"
+           items-per-page="$ctrl.state.size"
+           max-size="5"
+           boundary-links="true"
+           rotate="true"
+           class="pull-right table-pagination">
+      </div>
+    </div>
+    <div style="clear: both"></div>
+  </div>
+</div>

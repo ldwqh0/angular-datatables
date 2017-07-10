@@ -1,0 +1,48 @@
+{
+  "name": "angular-datatables",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/angular-datatables.js",
+  "scripts": {
+    "build": "rimraf dist && webpack",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ldwqh0/angular-datatables.git"
+  },
+  "author": "ldwqh0",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ldwqh0/angular-datatables/issues"
+  },
+  "homepage": "https://github.com/ldwqh0/angular-datatables#readme",
+  "devDependencies": {
+    "babel-core": "^6.24.1",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-preset-env": "^1.2.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.22.0",
+    "css-loader": "^0.28.4",
+    "eslint": "^4.2.0",
+    "eslint-config-standard": "^10.2.1",
+    "eslint-plugin-html": "^2.0.3",
+    "eslint-plugin-import": "^2.3.0",
+    "eslint-plugin-node": "^4.2.2",
+    "eslint-plugin-promise": "^3.5.0",
+    "eslint-plugin-standard": "^3.0.1",
+    "file-loader": "^0.11.2",
+    "html-loader": "^0.4.5",
+    "less": "^2.7.2",
+    "less-loader": "^4.0.4",
+    "rimraf": "^2.6.1",
+    "style-loader": "^0.18.2",
+    "url-loader": "^0.5.9",
+    "webpack": "^3.1.0"
+  },
+  "peerDependencies": {
+    "angular": "^1.6.5"
+  }
+}

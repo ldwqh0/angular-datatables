@@ -1,12 +1,15 @@
 var path = require('path')
 module.exports = {
   entry: {
-    "angular-datatables": path.resolve(__dirname, './src/ng-table')
+    "angular-ui-datatables": path.resolve(__dirname, './src/ng-table')
   },
   output: {
     path: path.resolve(__dirname, './dist'),
     filename: '[name].js',
     libraryTarget: 'umd'
+  },
+  externals: {
+    angular: "angular"
   },
   module: {
     rules: [{

@@ -1,8 +1,8 @@
 {
-  "name": "angular-datatables",
-  "version": "0.0.1",
+  "name": "angular-ui-datatables",
+  "version": "0.0.2",
   "description": "",
-  "main": "dist/angular-datatables.js",
+  "main": "dist/angular-ui-datatables.js",
   "scripts": {
     "prepublish": "rimraf dist && webpack",
     "build": "rimraf dist && webpack",
@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ldwqh0/angular-datatables#readme",
   "devDependencies": {
+    "angular": "^1.6.5",
     "babel-core": "^6.24.1",
     "babel-eslint": "^7.2.3",
     "babel-loader": "^7.1.1",

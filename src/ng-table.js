@@ -1,5 +1,6 @@
 import './style.less'
 import template from './template.html'
+import angular from 'angular'
 
 let module = angular.module('angular.datatables', [])
 
@@ -52,14 +53,14 @@ function TableController($scope, $log, $http) {
 
   ctrl.getData = function (data, prop) {
     try {
-      let props = prop.split('.')
-      let result = data
-      for (var i in props) {
-        result = result[props[i]]
-      }
-      return result
+      return evil('(data.' + prop + ')')
     } catch (e) {
       return ''
+    }
+
+    function evil(data) {
+      let Fn = Function
+      return new Fn('return' + data)()
     }
   }
 

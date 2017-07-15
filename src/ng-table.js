@@ -53,14 +53,9 @@ function TableController($scope, $log, $http) {
 
   ctrl.getData = function (data, prop) {
     try {
-      return evil('(data.' + prop + ')')
+      return eval('(data.' + prop + ')')
     } catch (e) {
       return ''
-    }
-
-    function evil(data) {
-      let Fn = Function
-      return new Fn('return' + data)()
     }
   }
 

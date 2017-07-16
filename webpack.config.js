@@ -2,7 +2,7 @@ var path = require('path')
 let ExtractTextPlugin = require('extract-text-webpack-plugin')
 module.exports = {
   entry: {
-    "angular-ui-datatables": path.resolve(__dirname, './src/ng-table')
+    'angular-ui-datatables': path.resolve(__dirname, './src/ng-table')
   },
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -10,7 +10,7 @@ module.exports = {
     libraryTarget: 'umd'
   },
   externals: {
-    angular: "angular"
+    angular: 'angular'
   },
   module: {
     rules: [{

@@ -9,7 +9,8 @@
         </thead>
         <tbody>
         <tr ng-if="!$ctrl.state.data || $ctrl.state.data.length<=0">
-          <td colspan="{{$ctrl.option.columns.length}}">无数据</td>
+          <td ng-if="!$ctrl.state.error" colspan="{{$ctrl.option.columns.length}}">无数据</td>
+          <td ng-if="$ctrl.state.error" colspan="{{$ctrl.option.columns.length}}">{{$ctrl.state.error}}</td>
         </tr>
         <tr ng-if="$ctrl.isLoading">
           <td colspan="{{$ctrl.option.columns.length}}">加载中...</td>
@@ -37,7 +38,8 @@
           </select>
           <span>条记录</span>
         </div>
-        <div class="dataTables_info"><span>当前显示 {{$ctrl.state.start}} 到 {{$ctrl.state.end}} 条，共{{$ctrl.state.totalItems}}条记录</span></div>
+        <div class="dataTables_info"><span>当前显示 {{$ctrl.state.start}} 到 {{$ctrl.state.end}} 条，共{{$ctrl.state.totalItems}}条记录</span>
+        </div>
       </div>
     </div>
     <div class="col-md-5">

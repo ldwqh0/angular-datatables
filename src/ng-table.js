@@ -113,7 +113,7 @@ function TableController ($scope, $log, $http) {
       ajax = angular.extend(ajax, ctrl.ajax)
     }
     $http(ajax).then(response => {
-      ctrl.isLoading = false
+      ctrl.state.isLoading = false
       let result = response.data
       ctrl.state.data = []
       if (ctrl.state.draw === result.draw) {
@@ -138,7 +138,7 @@ function TableController ($scope, $log, $http) {
         ctrl.onChange({data: ctrl.state.data})
       }
     }, err => {
-      ctrl.isLoading = false
+      ctrl.state.isLoading = false
       console.log(err)
     })
   }
@@ -180,7 +180,7 @@ function TableController ($scope, $log, $http) {
   function setIndex (data) {
     let start = (ctrl.state.page - 1) * ctrl.state.size
     for (let value of data) {
-      value['$$index'] = ++start
+      value['$$index'] = start++
     }
   }
 }
@@ -235,6 +235,24 @@ module.directive('tableTemplate', ['$compile', function ($compile) {
       let html = attrs.template
       element.html(html)
       $compile(element.contents())(scope)
+    }
+  }
+}])
+module.directive('titleTemplate', ['$compile', $compile => {
+  return {
+    replace: true,
+    restrict: 'E',
+    scope: {
+      column: '<',
+      option: '<'
+    },
+    link ($scope, element, attrs) {
+      for (let key in $scope.option.methods) {
+        $scope[key] = $scope.option.methods[key]
+      }
+      let html = attrs.template
+      element.html(html)
+      $compile(element.contents())($scope)
     }
   }
 }])

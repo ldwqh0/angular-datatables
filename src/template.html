@@ -4,7 +4,15 @@
       <table class="table table-bordered table-striped">
         <thead>
         <tr>
-          <th ng-repeat="column in $ctrl.option.columns">{{column.title?column.title:column.data}}</th>
+          <th ng-style="column.style" ng-repeat="column in $ctrl.option.columns">
+            <span ng-if="!column.titleTemplate">{{column.title?column.title:column.data}}</span>
+            <title-template
+              ng-if="column.titleTemplate"
+              column="column"
+              template="{{column.titleTemplate}}"
+              option="$ctrl.option">
+            </title-template>
+          </th>
         </tr>
         </thead>
         <tbody>
@@ -12,14 +20,14 @@
           <td ng-if="!$ctrl.state.error" colspan="{{$ctrl.option.columns.length}}">无数据</td>
           <td ng-if="$ctrl.state.error" colspan="{{$ctrl.option.columns.length}}">{{$ctrl.state.error}}</td>
         </tr>
-        <tr ng-if="$ctrl.isLoading">
+        <tr ng-if="$ctrl.state.isLoading">
           <td colspan="{{$ctrl.option.columns.length}}">加载中...</td>
         </tr>
-        <tr ng-if="!$ctrl.isLoading" ng-repeat="data in $ctrl.state.data">
+        <tr ng-if="!$ctrl.state.isLoading" ng-repeat="data in $ctrl.state.data">
           <td ng-repeat="column in $ctrl.option.columns">
             <span ng-if="!column.template">{{$ctrl.getData(data,column.data) | ngTableFilter : column.filters}}</span>
             <table-template ng-if="column.template" data="$ctrl.getData(data,column.data)" full="data"
-                            template="{{column.template}}">{{column.template}}
+                            template="{{column.template}}">
             </table-template>
           </td>
         </tr>

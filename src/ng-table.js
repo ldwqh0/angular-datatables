@@ -15,7 +15,7 @@ let component = {
 }
 
 TableController.inject = ['$scope', '$log', '$http']
-function TableController($scope, $log, $http) {
+function TableController ($scope, $log, $http) {
   let ctrl = this
   // 声明一个对象，保存当前的表格状态
   ctrl.state = {
@@ -75,7 +75,7 @@ function TableController($scope, $log, $http) {
     $log.debug(obj)
   }
 
-  function copyOption(dist, src) {
+  function copyOption (dist, src) {
     for (let key in src) {
       if (typeof dist[key] === 'undefined') {
         dist[key] = src[key]
@@ -85,7 +85,7 @@ function TableController($scope, $log, $http) {
   }
 
   // 加载数据
-  function loadData() {
+  function loadData () {
     $log.debug('load data ...')
     if (ctrl.option.serverSide) {
       loadServerData()
@@ -95,7 +95,7 @@ function TableController($scope, $log, $http) {
   }
 
   // 加载服务器数据
-  function loadServerData() {
+  function loadServerData () {
     $log.debug('load data from server')
     ctrl.state.isLoading = true
     let ajax = {
@@ -134,6 +134,7 @@ function TableController($scope, $log, $http) {
         ctrl.state.error = result.error
         ctrl.state.data = result.data // 显示数据
         ctrl.state.totalItems = result.recordsTotal
+        setIndex(ctrl.state.data)
         ctrl.onChange({data: ctrl.state.data})
       }
     }, err => {
@@ -143,7 +144,7 @@ function TableController($scope, $log, $http) {
   }
 
   // 加载本地数据
-  function loadLocalData() {
+  function loadLocalData () {
     $log.debug('load data from local data')
     let data = ctrl.data
 
@@ -172,12 +173,20 @@ function TableController($scope, $log, $http) {
     }
     ctrl.state.end = end
     ctrl.state.data = data.slice(start, end)
+    setIndex(ctrl.state.data)
     ctrl.onChange({'data': ctrl.state.data})
+  }
+
+  function setIndex (data) {
+    let start = (ctrl.state.page - 1) * ctrl.state.size
+    for (let value of data) {
+      value['$$index'] = ++start
+    }
   }
 }
 module.filter('ngTableFilter', ['$filter', '$sce', function ($filter, $sce) {
 
-  function getValueByFilter(val, filter) {
+  function getValueByFilter (val, filter) {
     let filter_
     let params_
     if (typeof filter === 'string') {

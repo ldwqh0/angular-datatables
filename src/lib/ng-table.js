@@ -187,4 +187,3 @@ function TableController ($scope, $log, $http) {
 }
 
 module.component('ngDatatables', component)
-

@@ -178,9 +178,11 @@ function TableController ($scope, $log, $http) {
   }
 
   function setIndex (data) {
-    let start = (ctrl.state.page - 1) * ctrl.state.size
-    for (let value of data) {
-      value['$$index'] = start++
+    if (data && data instanceof Array && data.length > 0) {
+      let start = (ctrl.state.page - 1) * ctrl.state.size
+      for (let value of data) {
+        value['$$index'] = start++
+      }
     }
   }
 }

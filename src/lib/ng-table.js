@@ -1,8 +1,7 @@
-import './style.less'
+import '../style/style.less'
 import template from './template.html'
 import angular from 'angular'
-
-let module = angular.module('angular.datatables', [])
+import module from './module'
 
 let component = {
   template,
@@ -186,77 +185,6 @@ function TableController ($scope, $log, $http) {
     }
   }
 }
-module.filter('ngTableFilter', ['$filter', '$sce', function ($filter, $sce) {
 
-  function getValueByFilter (val, filter) {
-    let filter_
-    let params_
-    if (typeof filter === 'string') {
-      let fls = filter.split(':')
-      filter_ = fls[0]
-      params_ = fls[1]
-    } else {
-      filter_ = filter.name
-      params_ = filter.params
-    }
-    return $filter(filter_)(val, params_)
-  }
-
-  return function (val, filters) {
-    try {
-      let result = val
-      if (filters && typeof filters === 'string') {
-        filters = filters.split('|')
-      }
-      if (filters && filters instanceof Array) {
-        for (let i in filters) {
-          let filter = filters[i]
-          result = getValueByFilter(val, filter)
-        }
-      } else {
-        return val
-      }
-      return $sce.trustAsHtml(result)
-    } catch (e) {
-      return ''
-    }
-  }
-}])
-module.directive('tableTemplate', ['$compile', function ($compile) {
-  return {
-    replace: true,
-    restrict: 'E',
-    scope: {
-      data: '<',
-      full: '<'
-    },
-    link: function (scope, element, attrs) {
-      for (let key in scope.$parent.$ctrl.option.methods) {
-        scope[key] = scope.$parent.$ctrl.option.methods[key]
-      }
-      let html = attrs.template
-      element.html(html)
-      $compile(element.contents())(scope)
-    }
-  }
-}])
-module.directive('titleTemplate', ['$compile', $compile => {
-  return {
-    replace: true,
-    restrict: 'E',
-    scope: {
-      column: '<',
-      option: '<'
-    },
-    link ($scope, element, attrs) {
-      for (let key in $scope.option.methods) {
-        $scope[key] = $scope.option.methods[key]
-      }
-      let html = attrs.template
-      element.html(html)
-      $compile(element.contents())($scope)
-    }
-  }
-}])
 module.component('ngDatatables', component)
-export default 'angular.datatables'
+

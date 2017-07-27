@@ -14,6 +14,7 @@ let component = {
 }
 
 TableController.inject = ['$scope', '$log', '$http']
+
 function TableController ($scope, $log, $http) {
   let ctrl = this
   // 声明一个对象，保存当前的表格状态
@@ -52,7 +53,11 @@ function TableController ($scope, $log, $http) {
 
   ctrl.getData = function (data, prop) {
     try {
-      return eval('(data.' + prop + ')')
+      if (/^[0-9]/.test(prop)) {
+        return data[prop]
+      } else {
+        return eval('(' + JSON.stringify(data) + '.' + prop + ')')
+      }
     } catch (e) {
       return ''
     }

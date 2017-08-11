@@ -75,10 +75,6 @@ function TableController ($scope, $log, $http) {
     })
   }
 
-  ctrl.$onChanges = function (obj) {
-    $log.debug(obj)
-  }
-
   function copyOption (dist, src) {
     for (let key in src) {
       if (typeof dist[key] === 'undefined') {
@@ -119,8 +115,8 @@ function TableController ($scope, $log, $http) {
     $http(ajax).then(response => {
       ctrl.state.isLoading = false
       let result = response.data
-      ctrl.state.data = []
       if (ctrl.state.draw === result.draw) {
+        ctrl.state.data = []
         let start = 0
         let end = 0
         let page = ctrl.state.page
@@ -136,10 +132,12 @@ function TableController ($scope, $log, $http) {
         ctrl.state.start = start
         ctrl.state.end = end
         ctrl.state.error = result.error
-        ctrl.state.data = result.data // 显示数据
+        ctrl.state.data = setIndex(result.data) // 显示数据
         ctrl.state.totalItems = result.recordsTotal
-        setIndex(ctrl.state.data)
+        $log.debug('get data from server', ctrl.state.data)
         ctrl.onChange({data: ctrl.state.data})
+      } else {
+        $log.debug('返回的戳标记和本地标记不一致，不刷新表格，本地标记===' + ctrl.state.draw + ',返回标记===' + result.draw)
       }
     }, err => {
       ctrl.state.isLoading = false
@@ -187,6 +185,7 @@ function TableController ($scope, $log, $http) {
       for (let value of data) {
         value['$$index'] = start++
       }
+      return data
     }
   }
 }

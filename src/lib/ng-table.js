@@ -42,13 +42,17 @@ function TableController ($scope, $log, $http) {
     ajax: '', // 请求配置
     columns: [], // 表格列配置
     paging: true, // 是否启用分页
+    /**
+     * 用来记录表格配置的变化历史，当表格的整体配置项改变时，应该更新该版本号。
+     * */
     version: 0
   }
 
   // 调转到指定页码
-  ctrl.goPage = function (page) {
-    $log.debug('go page ' + page)
-    ctrl.option.version++
+  ctrl.goPage = function () {
+    $log.debug('go page ' + ctrl.state.page)
+    loadData()
+    // ctrl.option.version++
   }
 
   ctrl.getData = function (data, prop) {
@@ -70,6 +74,11 @@ function TableController ($scope, $log, $http) {
     $scope.$watch('$ctrl.option.version', function (v) {
       if (v && v > 0) {
         $log.debug('the table version is changed')
+        /**
+         * 当检测到表格配置改变之后，应该将显示页码置为1
+         * @type {number}
+         */
+        ctrl.state.page = 1
         loadData()
       }
     })
